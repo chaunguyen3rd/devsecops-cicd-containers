@@ -347,6 +347,7 @@ Resources:
                 "aws:SecureTransport": false
 
   ###Cloud watch event role
+  # DONE
   AmazonCloudWatchEventRole:
     Type: "AWS::IAM::Role"
     Properties:
@@ -376,6 +377,7 @@ Resources:
                     - !Ref AppPipeline
 
   ### Cloudwatch event to trigger the pipeline on commit
+  # DONE
   AmazonCloudWatchEventRule:
     Type: "AWS::Events::Rule"
     Properties:
@@ -416,6 +418,7 @@ Resources:
           Id: codepipeline-AppPipeline
 
   ###Cloudwatch event rule for SNS notifications for pipeline state change
+  # DONE
   CloudWatchPipelineEventRule:
     Type: "AWS::Events::Rule"
     Properties:
@@ -429,6 +432,7 @@ Resources:
           Id: "PipelineNotifications"
 
   ###Cloudtrail event notifications for pipeline updates, deletes, and codebuild project creation, deletion, etc.
+  # DONE
   TrailBucket:
     Type: AWS::S3::Bucket
     Properties:
@@ -436,6 +440,7 @@ Resources:
         - Key: pipeline-name
           Value: !Sub ${AWS::StackName}-pipeline
 
+  # DONE
   TrailBucketPolicy:
     Type: "AWS::S3::BucketPolicy"
     Properties:
@@ -472,6 +477,7 @@ Resources:
               Bool:
                 "aws:SecureTransport": false
 
+  # DONE
   Trail:
     DependsOn:
       - TrailBucketPolicy
@@ -486,11 +492,13 @@ Resources:
       CloudWatchLogsLogGroupArn: !GetAtt "TrailLogGroup.Arn"
       CloudWatchLogsRoleArn: !GetAtt "TrailLogGroupRole.Arn"
 
+  # DONE
   TrailLogGroup:
     Type: "AWS::Logs::LogGroup"
     Properties:
       RetentionInDays: 90
 
+  # DONE
   TrailLogGroupRole:
     Type: "AWS::IAM::Role"
     Properties:
@@ -513,6 +521,7 @@ Resources:
                   - "logs:PutLogEvents"
                 Resource: !GetAtt "TrailLogGroup.Arn"
 
+  # DONE
   PipelineStateChangeMetricFiletr:
     Type: "AWS::Logs::MetricFilter"
     Properties:
@@ -523,6 +532,7 @@ Resources:
           MetricNamespace: "CloudTrailMetrics"
           MetricValue: "1"
 
+  # DONE
   PipelineStateChangeAlarm:
     Type: AWS::CloudWatch::Alarm
     Properties:
@@ -538,6 +548,7 @@ Resources:
       Statistic: "Sum"
       Period: 1800
 
+  # DONE
   CodeBuildChangeMetricFilter:
     Type: "AWS::Logs::MetricFilter"
     Properties:
@@ -548,6 +559,7 @@ Resources:
           MetricNamespace: "CloudTrailMetrics"
           MetricValue: "1"
 
+  # DONE
   CodeBuildStateChangeAlarm:
     Type: AWS::CloudWatch::Alarm
     Properties:
@@ -612,6 +624,7 @@ Resources:
         SourceIdentifier: CLOUD_TRAIL_LOG_FILE_VALIDATION_ENABLED
 
   #### Codepipeline creation
+  # DONE
   AppPipeline:
     Type: "AWS::CodePipeline::Pipeline"
     Properties:
@@ -783,6 +796,7 @@ Resources:
           Value: !Sub ${AWS::StackName}-pipeline
 
   #### SAST amalysis codebuild project
+  # DONE
   SASTBuildProject:
     Type: AWS::CodeBuild::Project
     Properties:
@@ -829,6 +843,7 @@ Resources:
           Value: !Sub ${AWS::StackName}-pipeline
 
   #### ECR SAST amalysis codebuild project
+  # DONE
   ECRSASTBuildProject:
     Type: AWS::CodeBuild::Project
     Properties:
@@ -865,6 +880,7 @@ Resources:
           Value: !Sub ${AWS::StackName}-pipeline
 
   ####Secrets Analysis BuildProject
+  # DONE
   SecBuildProject:
     Type: AWS::CodeBuild::Project
     Properties:
@@ -897,6 +913,7 @@ Resources:
           Value: !Sub ${AWS::StackName}-pipeline
 
   #### DAST analysis codebuild project
+  # DONE
   DASTBuildProject:
     Type: AWS::CodeBuild::Project
     Properties:
@@ -934,6 +951,7 @@ Resources:
           Value: !Sub ${AWS::StackName}-pipeline
 
   ### EKS Deploy BuildProject
+  # DONE
   DeployBuildProject:
     Type: AWS::CodeBuild::Project
     Properties:
